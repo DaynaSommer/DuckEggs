@@ -1,0 +1,102 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Jun 10 10:05:52 2023
+
+@author: dayna
+"""
+
+
+# Dayna Sommer - Project 4C - May 3, 2022
+print ()
+print("Project 4C Submitted by Dayna Sommer")
+print ()
+
+
+duckCount = totEggs = highNum = 0
+lowValue = 99999
+
+
+date = input("What is the date? (month/day/year)?  ")
+medPrice = float(input("What is the price of medium eggs?  "))
+lrgPrice = float(input("What is the price of large eggs?  "))
+jmboPrice = float(input("What is the price of jumbo eggs?  "))
+
+
+def main ():
+    global duckID
+    flag = input("What will be entered to terminate the report?  ")
+    duckID = input("What is the ID for the first duck?  ")
+    while (duckID != flag):
+        procDuck()
+        duckID = input("What is the ID for the next duck? (Enter flag if done) ")
+    average(totEggs, duckCount)
+    displaySummary()
+
+
+def procDuck():
+    global duckCount, totEggs, totValue, totNumEggs, qty, size, valueEggs
+    resetValues()
+    qty = int(input("How many eggs were found for this collection? (Enter 99 if done)" ))
+    while (qty != 99):
+        size = input("What is the size of these eggs? Enter M, L, or J  ")
+        valueEggs = calculateValue()
+        print("For this collection")
+        print("The value of the eggs is:", valueEggs)
+        print("The number of eggs is:", qty)
+        print("The size of the eggs is:", size)
+        totEggs = totEggs + qty
+        totValue = totValue + valueEggs
+        totNumEggs = totNumEggs + qty
+        qty = int(input("How many eggs were found for this collection? (Enter 99 if done)  "))
+    updateHighLow()
+    print()
+    print("The total number of eggs is", totNumEggs)
+    print("The total value of the eggs is", totValue)
+    
+    
+def resetValues ():
+    global duckCount, totValue, totNumEggs
+    totNumEggs = totValue = 0
+    duckCount = duckCount + 1
+    
+
+def calculateValue():
+    global size, medPrice, lrgPrice, jmboPrice, qty
+    if (size == "M"):
+        valueEggs = qty * medPrice
+    elif (size == "L"):
+        valueEggs = qty * lrgPrice
+    else:
+        valueEggs = qty * jmboPrice
+    return valueEggs
+
+
+def updateHighLow():
+    global duckID, highNum, lowID, highID, lowValue
+    if (totNumEggs > highNum):
+        highNum = totNumEggs
+        highID = duckID
+    if (totValue < lowValue):
+        lowValue = totValue
+        lowID = duckID
+    
+
+def average (totEggs, duckCount):
+    global avgNumEggs
+    avgNumEggs = totEggs / duckCount
+    
+
+def displaySummary():
+    global date, lowID, highID, lowValue, highNum, avgNumEggs
+    print()
+    print("Duck Eggs Summary")
+    print("For the date: ", date  )
+    print("The average number of eggs is: ", avgNumEggs  )
+    print("The duck who produced the largest number of eggs is: ", highID  )
+    print("The highest number of eggs produced is: ", highNum  )
+    print("The duck who produced the lowest value is:", lowID )
+    print(f"The lowest dollar amount of eggs is: ${lowValue}" )
+    
+
+main ()
